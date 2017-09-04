@@ -16,7 +16,6 @@ GLSL code , just an example
 http://thebookofshaders.com/edit.php?log=170904133835  
   
 Inkscape screenshot  
-  
-![example](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/ellipse%20rect%20font.png.png)  
+![example](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/ellipse%20rect%20font.png)  
   
 I will share the .svg if I make any progress  
