@@ -17,6 +17,9 @@ float triangle(vec2 A, vec2 B, vec2 C) {
     return clamp(AB*side(B,C),0.0,1.0) *
            clamp(AB*side(C,A),0.0,1.0);
            
+triangle would be more usefull than rect 
+ellipse will be rewritten to use the same aa for consistency
+           
 will do multisampling so want to minimize the amount of work per sample by using the barrycentric method
 https://stackoverflow.com/a/20861130/4900546
 
@@ -48,13 +51,51 @@ float triangle(tri T){
     vec3 p = vec3(1,gl_FragCoord.xy);
     float s = dot(T.s,p);
     float t = dot(T.t,p);
-    float A = T.A;
-    return float(s > 0.0 && t > 0.0 && (s + t) <= A);
+    return float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+}
+
+vec3 aatriangle(tri T){
+    vec3 ret, p = vec3(1,gl_FragCoord.xy);
+    float s,t,A = T.A;
+    
+    vec3 sample;
+    
+    sample = vec3(0.,-0.333,-0.333);
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.r += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    sample.z = 0.0;
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.r += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    sample.z = 0.333;
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.r += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    
+    sample = vec3(0.,0.,-0.333);
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.g += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    s = dot(T.s,p); t = dot(T.t,p);
+    ret.g += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    sample.z = 0.333;
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.g += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    
+    sample = vec3(0.,0.333,-0.333);
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.b += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    sample.z = 0.0;
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.b += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    sample.z = 0.333;
+    s = dot(T.s,p+sample); t = dot(T.t,p+sample);
+    ret.b += float(s > 0.0 && t > 0.0 && (s + t) <= T.A);
+    
+    
+    return ret*0.333;
 }
 
 void main() {
     vec2 st =gl_FragCoord.xy;
-    tri mytriangle = new_triangle(vec2(0.340,0.460)*500., vec2(0.640,0.710)*500., vec2(0.720,0.340)*500. );
-    float foo= triangle(mytriangle);
-    gl_FragColor = vec4(vec3(foo),1.00);
+    tri mytriangle = new_triangle(vec2(0.760,0.610)*500., vec2(0.220,0.680)*500., vec2(0.400,0.300)*500. );
+    vec3 foo= aatriangle(mytriangle);
+    gl_FragColor = vec4(foo,1.00);
 }
