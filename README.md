@@ -19,3 +19,10 @@ Inkscape screenshot
 ![example](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/ellipse%20rect%20font.png)  
   
 I will share the .svg if I make any progress  
+
+EDIT:  
+new plan, ellipses and triangles rather than ellipses and rects  
+anti alias will be 9 samples per pixel, (3 samples per channel)  
+every glyph will be a struct of fixed number of ellipses and triangles, sufficent to draw complicated glyphs like ampersand '&'
+simpler glyphs like whitespace ' ' may have to do the same work if branching is to be avoided  
+What needs to be solved is how to provide random access to the glyph, texture lookup? 
