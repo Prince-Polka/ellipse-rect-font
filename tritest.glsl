@@ -45,16 +45,16 @@ tri new_triangle(vec2 p0, vec2 p1, vec2 p2){
 }
 
 float triangle(tri T){
-    vec2 p = gl_FragCoord.xy;
-    float s = T.s.x + T.s.y*p.x + T.s.z*p.y;
-    float t = T.t.x + T.t.y*p.x + T.t.z*p.y;
+    vec3 p = vec3(1,gl_FragCoord.xy);
+    float s = dot(T.s,p);
+    float t = dot(T.t,p);
     float A = T.A;
     return float(s > 0.0 && t > 0.0 && (s + t) <= A);
 }
 
 void main() {
     vec2 st =gl_FragCoord.xy;
-    tri mytriangle = new_triangle(vec2(60.360,20.310), vec2(200.590,20.880), vec2(300.,100.) );
+    tri mytriangle = new_triangle(vec2(0.340,0.460)*500., vec2(0.640,0.710)*500., vec2(0.720,0.340)*500. );
     float foo= triangle(mytriangle);
     gl_FragColor = vec4(vec3(foo),1.00);
 }
