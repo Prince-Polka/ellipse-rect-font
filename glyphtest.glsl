@@ -26,7 +26,9 @@ tri new_triangle(vec2 p0, vec2 p1, vec2 p2){
     return ret;
 }
 
-vec3 glyph(){
+void main() {
+    tris[0] = new_triangle(vec2(0.,0.),vec2(10.,10.),vec2(0.,10.));
+    tris[1] = new_triangle(vec2(0.,0.),vec2(10.,10.),vec2(10.,0.));
     mat3 sample;
     vec2 base = mod(gl_FragCoord.xy,vec2(15,20)); // width and height of "glyph box"
     for(int i=0;i<3;i++)
@@ -40,18 +42,9 @@ vec3 glyph(){
             //for(int k=0;k<2;k++)
             //repeat for elis
         }
-    
     vec3 down = vec3(0.333);
-    return clamp(vec3( 
-        dot(sample[0],down),
-        dot(sample[1],down),
-        dot(sample[2],down) 
-    ),vec3(0),vec3(1));
-}
-
-void main() {
-    tris[0] = new_triangle(vec2(0.,0.),vec2(10.,10.),vec2(0.,10.));
-    tris[1] = new_triangle(vec2(0.,0.),vec2(10.,10.),vec2(10.,0.));
-    
-    gl_FragColor = vec4(glyph(),1.00);
+    gl_FragColor = vec4 (
+    vec3( dot(sample[0],down),
+          dot(sample[1],down),
+          dot(sample[2],down) ), 1);
 }
