@@ -28,13 +28,14 @@ tri new_triangle(vec2 p0, vec2 p1, vec2 p2){
 
 vec3 glyph(){
     mat3 sample;
+    vec2 base = mod(gl_FragCoord.xy,vec2(15,20)); // width and height of "glyph box"
     for(int i=0;i<3;i++)
         for(int j=0;j<3;j++){
-            vec3 pitch = vec3(1,gl_FragCoord.xy+(vec2(i,j)-1.0)*0.333);
+            vec3 pitch = vec3(1,base+(vec2(i,j)-1.0)*0.333);
             for(int k=0;k<2;k++){
             float s = dot(tris[k].s,pitch);
             float t = dot(tris[k].t,pitch);
-            sample[i][j] += float(s > 0.0 && t > 0.0 && (s + t) <= tris[k].A);
+            sample[i][j] += float( s> 0.0 && t > 0.0 && (s + t) <= tris[k].A);
             }
             //for(int k=0;k<2;k++)
             //repeat for elis
@@ -49,8 +50,8 @@ vec3 glyph(){
 }
 
 void main() {
-    tris[0] = new_triangle(vec2(200.,150.),vec2(300.,300.),vec2(100.,300.));
-    tris[1] = new_triangle(vec2(100.,100.),vec2(120.,320.),vec2(200.,100.));
+    tris[0] = new_triangle(vec2(0.,0.),vec2(10.,10.),vec2(0.,10.));
+    tris[1] = new_triangle(vec2(0.,0.),vec2(10.,10.),vec2(10.,0.));
     
     gl_FragColor = vec4(glyph(),1.00);
 }
