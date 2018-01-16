@@ -35,10 +35,10 @@ float pointinelirect(vec2 st, elirect e){
     e.rot *= e.rot;
     
     /* for eli e.rot / e.sizesq , for rect e.rot / e.sizesq */
-    vec2 mode = e.rot / ( e.sizesq*(1.0-e.mode) + e.mode ) - e.sizesq * e.mode;
+    vec2 mode = max ( mix( e.rot/e.sizesq, e.rot-e.sizesq, e.mode ), vec2(0) );
     
     /* end part same for both modes */
-    return 1.0 - e.mult * float( dot(clamp( mode ,vec2(0),vec2(1)),vec2(1))>=1.0 );
+    return 1.0 - e.mult * float( dot( mode ,vec2(1) ) >= 1.0 );
 }
 
 void main() {
