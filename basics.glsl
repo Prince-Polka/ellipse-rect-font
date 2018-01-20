@@ -55,18 +55,18 @@ after transformation
 float elirect(vec2 st, mat3 e,float mode){
     st = (vec3(st,1) * e).xy;
     
-    return mix(float( dot(st,st) < 1.0), // ellipse
+    return mix(float( dot(st,st) < 1.0 ), // ellipse
                float( abs(st.x) < 1.0 && abs(st.y) < 1.0), // rect
                mode);
 }
 
 mat3 identity = mat3(1,0,0,
-                         0,1,0,
-                         0,0,1);
+                     0,1,0,
+                     0,0,1);
 
 mat3 scale(mat3 m,vec2 s){
-    return mat3(m[0]/s.x,
-                m[1]/s.y,
+    return mat3(m[0] / s.x,
+                m[1] / s.y,
                 0,0,0);
 }
 mat3 translate(mat3 m,vec2 t){
@@ -91,20 +91,77 @@ mat3 skew(mat3 m,vec2 sk){
     ); 
 }
 
+mat3 a[4];
+
+mat3 new_eli(float cx,float cy, float rx, float ry, float a, float b, float c, float d){
+
+    mat3 ret = identity;
+    
+    mat3 transform = mat3(a,c,0,
+                          b,d,0,
+                          0,0,0);
+    
+    ret = translate(ret,vec2(cx,cy));
+    
+    ret = scale(ret,vec2(rx,ry));
+    
+    ret *= transform;
+    
+    return ret;
+}
+
 void main() {
-    vec2 st = gl_FragCoord.xy/u_resolution.xy;
-    st.x *= u_resolution.x/u_resolution.y;
-    
-    float mode = float(mod(u_time,2.0)<1.0);
-    
+    vec2 st = gl_FragCoord.xy;
+    //float mode = float(mod(u_time,2.0)<1.0);
+    /*
     mat3 transform = identity;
-    
-    transform = translate(transform,vec2(0.5,0.5));
+    transform = translate(transform,vec2(250.0,250.0));
     transform = rotate(transform,u_time);
-    transform = scale(transform,vec2(0.15,0.25)); 
+    transform = scale(transform,vec2(100.0,200.0)); 
     transform = skew(transform,u_mouse*0.001);
+    float color = elirect(st,transform,0.0);
+    */
+/*
+<ellipse
+cx="350.08215"
+cy="261.56686"
+rx="31.27211"
+ry="50.04192"
+transform="matrix(0.95567154,0.29443489,-0.51154064,0.85925909,0,0)"
+/>
+<ellipse
+cx="494.43402"
+cy="-163.34969"
+rx="38.430882"
+ry="70.311661"
+transform="matrix(0.45470679,0.89064119,-0.61182571,0.79099261,0,0)"
+/>
+<ellipse
+cx="496.03284"
+cy="-38.805408"
+rx="43.829727"
+ry="39.536449"
+transform="matrix(0.32702,0.94501742,-0.96404292,0.26574658,0,0)"
+/>
+<ellipse
+cx="-210.97321"
+cy="-693.86157"
+rx="27.460346"
+ry="56.968483"
+transform="matrix(-0.38146552,0.92438307,-0.3482411,-0.937405,0,0)"
+/>
+*/
+    a[0] = new_eli(350.08215,261.56686,31.27211,50.04192,0.95567154,0.29443489,-0.51154064,0.85925909);
+    a[1] = new_eli(494.43402,-163.34969,38.43088,70.31166,0.45470679,0.89064119,-0.61182571,0.79099261);
+    a[2] = new_eli(496.03284,-38.80541,43.829727,39.53645,0.32702,0.94501742,-0.96404292,0.26574658);
+    a[3] = new_eli(-210.9732,-693.8616,27.460346,56.968483,-0.38146552,0.92438307,-0.3482411,-0.937405);
     
-    float color = elirect(st,transform,mode);
+    
+    float color = 0.0;
+    color += elirect(st,a[0],0.0);
+    color += elirect(st,a[1],0.0);
+    color += elirect(st,a[2],0.0);
+    color += elirect(st,a[3],0.0);
 
     gl_FragColor = vec4(vec3(color),1.0);
 }
