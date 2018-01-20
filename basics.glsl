@@ -117,17 +117,22 @@ mat3 new_eli(float cx,float cy, float rx, float ry, float a, float b, float c, f
     mat3 transform = mat3(a,c,0,
                           b,d,0,
                           0,0,0);
+    
     ret *= invert(transform);
     
     ret = translate(ret,vec2(cx,cy));
     
     ret = scale(ret,vec2(rx,ry));
     
+    
     return ret;
 }
 
 void main() {
     vec2 st = gl_FragCoord.xy;
+    
+    st.y = 650.0-st.y; // why is this needed? svg coordinate system is the same ,  aso why 650 ?
+    
     //float mode = float(mod(u_time,2.0)<1.0);
     /*
     mat3 transform = identity;
