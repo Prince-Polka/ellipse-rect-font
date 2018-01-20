@@ -90,6 +90,23 @@ mat3 skew(mat3 m,vec2 sk){
         0,0,1
     ); 
 }
+/* inver() from Processing.org, originally OpenJDK */
+mat3 invert(mat3 m) {
+    float determinant = m[0][0] * m[1][1] - m[0][1] * m[1][0];
+
+    float t00 = m[0][0];
+    float t01 = m[0][1];
+    float t02 = m[0][2];
+    float t10 = m[1][0];
+    float t11 = m[1][1];
+    float t12 = m[1][2];
+                     
+    return mat3(t11,-t01,t01 * t12 - t11 * t02,
+                -t10,t00,t10 * t02 - t00 * t12,
+                0,0,0) / determinant;
+  }
+
+
 
 mat3 a[4];
 
@@ -100,12 +117,11 @@ mat3 new_eli(float cx,float cy, float rx, float ry, float a, float b, float c, f
     mat3 transform = mat3(a,c,0,
                           b,d,0,
                           0,0,0);
+    ret *= invert(transform);
     
     ret = translate(ret,vec2(cx,cy));
     
     ret = scale(ret,vec2(rx,ry));
-    
-    ret *= transform;
     
     return ret;
 }
