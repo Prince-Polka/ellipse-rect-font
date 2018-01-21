@@ -27,13 +27,15 @@ Output of blablabla.glsl file;
 
 it needs a few rectangles aswell, but it looks the same as in inkscape  
 
-This is all that's necessary to determine wheter a point is inside a translated, rotated, skewed and scaled ellipse
+This is all that's necessary to determine wheter a point is inside a translated, rotated, skewed and scaled ellipse  
+  
 ```glsl
 bool eli(vec2 st, mat3 e){
     st = (vec3(st,1) * e).xy;
     return dot(st,st) < 1.0;
-}```
-
+}
+```
+  
 However one must first generate that matrix from svg data  
 I used a processing.org sketch to read the .svg as xml 
 The conversion math should also be done on cpu as it's not a per-pixel thing.
