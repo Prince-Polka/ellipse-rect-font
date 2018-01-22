@@ -19,13 +19,13 @@ Inkscape screenshot
 ![example](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/ellipse%20rect%20font.png)  
 
 I have been working on this some more and created a mess of experiment files.  
-Some progress though, ellipses of lowercase 'a' fetched from an inkscape .svg  
+Some progress though, ellipses of lowercase 'a' fetched from an inkscape file hackelirect.svg  
 
 Output of blablabla.glsl file;
 
-![lowercasea](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/lowercasea.png)  
+![lowercasea](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/blablabla.png)  
 
-it needs a few rectangles aswell, but it looks the same as in inkscape  
+looks the same as in inkscape
 
 This is all that's necessary to determine wheter a point is inside a translated, rotated, skewed and scaled ellipse  
   
