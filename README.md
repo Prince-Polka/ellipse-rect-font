@@ -23,7 +23,7 @@ Some progress though, ellipses of lowercase 'a' fetched from an inkscape file ha
 
 Output of blablabla.glsl file;
 
-![lowercasea](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/blablabla.png)  
+![lowercasea](https://raw.githubusercontent.com/Prince-Polka/ellipse-rect-font/master/blabla.png)  
 
 looks the same as in inkscape
 
