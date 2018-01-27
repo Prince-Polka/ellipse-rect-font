@@ -39,4 +39,7 @@ bool eli(vec2 st, mat3 e){
 However one must first generate that matrix from svg data  
 I used a processing.org sketch to read the .svg as xml 
 The conversion math should also be done on cpu as it's not a per-pixel thing.
-But it's done in the shader for now.
+
+Processing sketch blablabla
+
+https://github.com/Prince-Polka/blablabla
