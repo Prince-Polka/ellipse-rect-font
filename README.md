@@ -50,4 +50,4 @@ https://github.com/Prince-Polka/blablabla
 This screenshot shows successfull rendering of the AZazlayered.svg file ,  
 svg is parsed and converted through processing into a "texture" containting the vector data that is then rendered on shader
 
-Project is kind of sphagetti but I'm happy that it works
+[Project is kind of sphagetti but I'm happy that it works](https://github.com/Prince-Polka/elirectfont)
