@@ -1,0 +1,40 @@
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+uniform float u_time;
+
+void main() {
+    
+    vec2 st = gl_FragCoord.xy/u_resolution*8.-4.;
+    
+    float mode = mod(u_time,1.0);
+    float ret;
+    if(st.x <0.0 ){
+    /*
+    left side
+    old code
+    */
+    st.x+=2.;
+    ret = mix(float( dot(st,st) < 1.0 ), // ellipse
+              float( abs(st.x) < 1.0 && abs(st.y) < 1.0), // rect
+               mode);
+    }
+    else{
+    st.x-=2.;
+    /*
+    right side
+    new code
+    should work the same for mode 0.0, 1.0 
+    and does in this example, but doesnt in full code, thonk
+    */
+    st*=st;
+    st*=step(mode,st);
+    ret = 1.-step(1.,st.x+st.y);
+    }
+
+
+    gl_FragColor = vec4(vec3(ret),1.0);
+}
