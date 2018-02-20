@@ -38,3 +38,33 @@ void main() {
 
     gl_FragColor = vec4(vec3(ret),1.0);
 }
+
+
+
+
+
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+uniform float u_time;
+
+void main() {
+    
+    vec2 st = gl_FragCoord.xy/u_resolution*8.-4.;
+    
+    float mode = abs(mod(u_time*.5,2.0)-1.);
+    float corner,cross;
+    
+    corner = step(length(st-sign(st)*mode),1.-mode);
+
+    st = abs(st);
+    st *= step(mode,st);
+    cross = step(st.x+st.y,1.);
+
+
+    gl_FragColor = vec4(vec3(max(corner,cross)),1.0);
+}
