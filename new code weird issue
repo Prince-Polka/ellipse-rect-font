@@ -58,19 +58,10 @@ uniform float u_time;
 
 float  roundcorner(vec2 st,float mode){
     float l = 1.-mode;
-    
     st = abs(st);
     st *= step(mode,st);
-    
-    float corner,cross;
-    vec2 cr = abs(st-sign(st)*mode);
-
-    corner = 1.-dot(cr,cr)/(l*l);
-    // corner = 1.-(cr.x+cr.y)/l; chopped corner (octagon)
-    
-    cross = 1.-(st.x+st.y);
-    
-    return max(corner,cross);
+    st = abs(st-sign(st)*mode);
+    return 1.-dot(st,st)/(l*l);
 }
 
 void main() {
